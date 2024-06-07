@@ -22,8 +22,7 @@ dcp1 = 0
 
 image = Image.open("h3xer.png")
 bgimg = ImageTk.PhotoImage(image)
-image2 = Image.open("h3xer-hand.png")
-bgimg2 = ImageTk.PhotoImage(image2)
+
 var = StringVar()
 var.set(click)
 
