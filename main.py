@@ -25,9 +25,11 @@ bgimg = ImageTk.PhotoImage(image)
 
 var = StringVar()
 var.set(click)
-
+var1 = StringVar()
+var1.set(mult)
 def updateClicks():
     var.set(click)
+    var1.set(mult)
 
 def blankLine():
     for i in range(20):
@@ -43,6 +45,32 @@ def purchaseMoreSexCommand():
         mult = mult+1
         click = click - 50
         print("More Sex Purchased!")
+        blankLine()
+        updateClicks()
+
+def purchaseMoreSexX10Command():
+    global click
+    global mult
+    if click < 50:
+        print("Not enough sex!")
+        blankLine()
+    elif click >= 500:
+        mult = mult+10
+        click = click - 500
+        print("Max Sex Purchased!")
+        blankLine()
+        updateClicks()
+
+def purchaseMoreSexX100Command():
+    global click
+    global mult
+    if click < 5000:
+        print("Not enough sex!")
+        blankLine()
+    elif click >= 5000:
+        mult = mult+10
+        click = click - 5000
+        print("Max Sex Purchased!")
         blankLine()
         updateClicks()
 
@@ -81,10 +109,22 @@ def buttonCommand():
 mainClickButton = Button(master, text="Sex!", command = buttonCommand)
 mainClickButton.pack()
 
-purchaseDoubleClickButton = Button(master, text="Purchase More Sex", command = purchaseMoreSexCommand)
-purchaseDoubleClickButton.pack()
+purchaseDoubleClickButton = Button(master, text="Purchase More Sex x1", command = purchaseMoreSexCommand)
+purchaseDoubleClickButton.pack(side=TOP, anchor=NE,)
 
+purchaseDoubleClickButton2 = Button(master, text="Purchase More Sex x10", command = purchaseMoreSexX10Command)
+purchaseDoubleClickButton2.pack(side=TOP, anchor=NE,)
+
+purchaseDoubleClickButton2 = Button(master, text="Purchase More Sex x100", command = purchaseMoreSexX100Command)
+purchaseDoubleClickButton2.pack(side=TOP, anchor=NE,)
+
+label = Label(master, text="Clicks:")
+label.pack(side=TOP, anchor=NW,)
 label = Label(master, textvariable=var)
+label.pack(side=TOP, anchor=NW,)
+label = Label(master, text="Multiplier:")
+label.pack(side=TOP, anchor=NW,)
+label = Label(master, textvariable=var1)
 label.pack(side=TOP, anchor=NW,)
 
 label = Label(master, image=bgimg)
@@ -92,5 +132,5 @@ label.pack()
 
 
 master.title("Sex With H3xer")
-master.geometry("%sx%s+%s+%s" % (400,600,512,512))
+master.geometry("%sx%s+%s+%s" % (600,800,512,512))
 mainloop()
