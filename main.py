@@ -155,24 +155,6 @@ def buttonCommand():
     updateData()
     dataUpdate()
 
-
-    if click >= 100:
-        adv = "Achievement Unlocked: Sex? BONUS 100 SEX!"
-        click += 100
-
-    elif click >= 500:
-        adv =  "Achievement Unlocked: Clap These Cheeks! BONUS SEX!"
-        click += 300
-
-    elif click >= 1500:
-        adv = "Achievement Unlocked: Anal Master! EVEN MORE SEX!"
-        mult = mult * 4
-
-    elif click >= 3000:
-        adv = "Achievement Unlocked:  Doggy Style! EVEN MORE FUCKING SEX!"
-        mult = mult * 8
-
-
 data = {
         "click": click,
         "mult": mult,
