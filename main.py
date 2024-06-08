@@ -1,5 +1,6 @@
 from tkinter import *
 from PIL import ImageTk, Image
+import json
 import time
 
 master = Tk()
@@ -20,6 +21,10 @@ click = 0
 mult = 1
 dcp1 = 0
 
+
+
+
+
 image = Image.open("h3xer.png")
 bgimg = ImageTk.PhotoImage(image)
 
@@ -27,9 +32,10 @@ var = StringVar()
 var.set(click)
 var1 = StringVar()
 var1.set(mult)
-def updateClicks():
+def updateData():
     var.set(click)
     var1.set(mult)
+
 
 def blankLine():
     for i in range(20):
@@ -46,7 +52,7 @@ def purchaseMoreSexCommand():
         click = click - 50
         print("More Sex Purchased!")
         blankLine()
-        updateClicks()
+        updateData()
 
 def purchaseMoreSexX10Command():
     global click
@@ -59,7 +65,7 @@ def purchaseMoreSexX10Command():
         click = click - 500
         print("Max Sex Purchased!")
         blankLine()
-        updateClicks()
+        updateData()
 
 def purchaseMoreSexX100Command():
     global click
@@ -68,22 +74,18 @@ def purchaseMoreSexX100Command():
         print("Not enough sex!")
         blankLine()
     elif click >= 5000:
-        mult = mult+10
+        mult = mult+100
         click = click - 5000
         print("Max Sex Purchased!")
         blankLine()
-        updateClicks()
-
-
-
-
-
+        updateData()
 def buttonCommand():
     global click
     global mult
     click += 1*(mult)
     uiPrint()
-    updateClicks()
+    updateData()
+    dataUpdate()
 
 
     if click == 100:
@@ -106,6 +108,31 @@ def buttonCommand():
         EVEN MORE FUCKING SEX!''')
         mult = mult * 8
 
+
+data = {
+        "click": click,
+        "mult": mult,
+}
+def dataUpdate():
+    global data
+    data = {
+        "click": click,
+        "mult": mult,
+    }
+
+def save():
+    with open("save.json", "w") as f:
+        json.dump(data, f,)
+def load():
+    global data
+    global click
+    global mult
+    with open("save.json", "r") as f:
+        data = json.load(f)
+        click = data["click"]
+        mult = data["mult"]
+    updateData()
+
 mainClickButton = Button(master, text="Sex!", command = buttonCommand)
 mainClickButton.pack()
 
@@ -118,9 +145,21 @@ purchaseDoubleClickButton2.pack(side=TOP, anchor=NE,)
 purchaseDoubleClickButton2 = Button(master, text="Purchase More Sex x100", command = purchaseMoreSexX100Command)
 purchaseDoubleClickButton2.pack(side=TOP, anchor=NE,)
 
-label = Label(master, text="Clicks:")
+mainClickButton = Button(master, text="Load", command = load)
+mainClickButton.pack(side=BOTTOM, anchor=NW)
+
+mainClickButton = Button(master, text="Save", command = save)
+mainClickButton.pack(side=BOTTOM, anchor=NW)
+
+
+
+label = Label(master, text="Sex:")
 label.pack(side=TOP, anchor=NW,)
 label = Label(master, textvariable=var)
+label.pack(side=TOP, anchor=NW,)
+label = Label(master, text="Multiplier:")
+label.pack(side=TOP, anchor=NW,)
+label = Label(master, textvariable=var1)
 label.pack(side=TOP, anchor=NW,)
 label = Label(master, text="Multiplier:")
 label.pack(side=TOP, anchor=NW,)
