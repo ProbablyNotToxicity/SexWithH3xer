@@ -21,8 +21,8 @@ click = 0
 mult = 1
 dcp1 = 0
 asx = 0
-asxmult = 1
-
+asxmulti = 1
+adv = "No Achievements"
 
 
 image = Image.open("h3xer.png")
@@ -35,14 +35,15 @@ var1.set(mult)
 var2 = StringVar()
 var2.set(asx)
 var3 = StringVar()
-var3.set(asxmult)
-
+var3.set(asxmulti)
+var4 = StringVar()
+var4.set(adv)
 def updateData():
     var.set(click)
     var1.set(mult)
     var2.set(asx)
-    var3.set(asxmult)
-
+    var3.set(asxmulti)
+    var4.set(adv)
 
 def blankLine():
     for i in range(20):
@@ -115,12 +116,12 @@ def purchaseAutoClickerCommand():
 
 def purchaseASXUpgrade():
     global click
-    global asxmult
+    global asxmulti
     if click < 1000:
         print("Not enough sex!")
         blankLine()
     elif click >= 1000:
-        asxmult += 1
+        asxmulti += 1
         click = click - 1000
         print("Auto Sex Upgrade Purchased!")
         blankLine()
@@ -130,40 +131,45 @@ def autoclick():
     global master
     global click
     global asx
-    click += asx*asxmult # get clicks from autoclickers
+    click += asx*asxmulti # get clicks from autoclickers
     updateData()
     master.after(1000, autoclick) # do this again 1 second later
 
 
-
+def reset():
+    global click
+    global asx
+    global mult
+    global asxmulti
+    asx = 0
+    click =0
+    mult = 1
+    asxmulti = 1
 
 def buttonCommand():
     global click
     global mult
+    global adv
     click += 1*(mult)
     uiPrint()
     updateData()
     dataUpdate()
 
 
-    if click == 100:
-        print('''Achievement Unlocked: Junior Clicker!
-        BONUS 100 SEX!''')
+    if click >= 100:
+        adv = "Achievement Unlocked: Sex? BONUS 100 SEX!"
         click += 100
 
-    elif click == 400:
-        print ('''Achievement Unlocked: Little Ninja Clicks!
-        BONUS SEX!''')
+    elif click >= 500:
+        adv =  "Achievement Unlocked: Clap These Cheeks! BONUS SEX!"
         click += 300
 
-    elif click == 1500:
-        print ('''Achievement Unlocked: Click Ninja Master!
-        EVEN MORE SEX!''')
+    elif click >= 1500:
+        adv = "Achievement Unlocked: Anal Master! EVEN MORE SEX!"
         mult = mult * 4
 
-    elif click == 3000:
-        print ('''Achievement Unlocked:  Jackie Chan Style!
-        EVEN MORE FUCKING SEX!''')
+    elif click >= 3000:
+        adv = "Achievement Unlocked:  Doggy Style! EVEN MORE FUCKING SEX!"
         mult = mult * 8
 
 
@@ -171,7 +177,7 @@ data = {
         "click": click,
         "mult": mult,
         "asx": asx,
-        "asxmult": asxmult,
+        "asxmulti": asxmulti,
 }
 def dataUpdate():
     global data
@@ -179,8 +185,8 @@ def dataUpdate():
         "click": click,
         "mult": mult,
         "asx": asx,
-        "asxmult": asxmult,
-    }
+        "asxmulti": asxmulti,
+}
 
 def save():
     with open("save.json", "w") as f:
@@ -190,13 +196,13 @@ def load():
     global click
     global mult
     global asx
-    global asxmult
+    global asxmulti
     with open("save.json", "r") as f:
         data = json.load(f)
         click = data["click"]
         mult = data["mult"]
         asx = data["asx"]
-        asxmult = data["asxmult"]
+        asxmulti = data["asxmulti"]
     updateData()
 
 mainClickButton = Button(master, text="Sex!", command = buttonCommand)
@@ -222,6 +228,9 @@ mainClickButton.pack(side=BOTTOM, anchor=NW)
 mainClickButton = Button(master, text="Save", command = save)
 mainClickButton.pack(side=BOTTOM, anchor=NW)
 
+mainClickButton = Button(master, text="Reset", command = reset)
+mainClickButton.pack(side=BOTTOM, anchor=NW)
+
 
 
 label = Label(master, text="Sex:")
@@ -240,6 +249,9 @@ label = Label(master, text="Auto Sex Multiplier:")
 label.pack(side=TOP, anchor=NW,)
 label = Label(master, textvariable=var3)
 label.pack(side=TOP, anchor=NW,)
+
+label = Label(master, textvariable=var4)
+label.pack(side=TOP, anchor=SE,)
 
 label = Label(master, image=bgimg)
 label.pack()
