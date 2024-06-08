@@ -15,6 +15,9 @@ def info():
     print("More Sex purchases need 50 clicks!")
 
 
+
+
+
 info()
 
 click = 0
@@ -22,6 +25,7 @@ mult = 1
 dcp1 = 0
 asx = 0
 asxmulti = 1
+prest = 1
 adv = "No Achievements"
 
 
@@ -37,14 +41,26 @@ var2.set(asx)
 var3 = StringVar()
 var3.set(asxmulti)
 var4 = StringVar()
-var4.set(adv)
+var4.set(prest)
 def updateData():
     var.set(click)
     var1.set(mult)
     var2.set(asx)
     var3.set(asxmulti)
-    var4.set(adv)
+    var4.set(prest)
 
+def prestige():
+    global prest
+    global click
+    global asx
+    global mult
+    global asxmult
+    if click >= 100000*prest:
+        prest += 1
+        click = 0
+        asx = 1*prest
+        asxmult = 1*prest
+        mult = 1*prest
 def blankLine():
     for i in range(20):
         print("")
@@ -156,10 +172,11 @@ def buttonCommand():
     dataUpdate()
 
 data = {
-        "click": click,
-        "mult": mult,
-        "asx": asx,
-        "asxmulti": asxmulti,
+    "click": click,
+    "mult": mult,
+    "asx": asx,
+    "asxmulti": asxmulti,
+    "prest": prest,
 }
 def dataUpdate():
     global data
@@ -168,6 +185,7 @@ def dataUpdate():
         "mult": mult,
         "asx": asx,
         "asxmulti": asxmulti,
+        "prest": prest,
 }
 
 def save():
@@ -179,16 +197,20 @@ def load():
     global mult
     global asx
     global asxmulti
+    global prest
     with open("save.json", "r") as f:
         data = json.load(f)
         click = data["click"]
         mult = data["mult"]
         asx = data["asx"]
         asxmulti = data["asxmulti"]
+        prest = data["prest"]
     updateData()
+label = Label(master, image=bgimg)
+label.place(x=0, y=0, relwidth=1, relheight=1)
 
 mainClickButton = Button(master, text="Sex!", command = buttonCommand)
-mainClickButton.pack()
+mainClickButton.pack(side=TOP,)
 
 purchaseDoubleClickButton = Button(master, text="Purchase More Sex x1", command = purchaseMoreSexCommand)
 purchaseDoubleClickButton.pack(side=TOP, anchor=NE,)
@@ -211,7 +233,9 @@ mainClickButton = Button(master, text="Save", command = save)
 mainClickButton.pack(side=BOTTOM, anchor=NW)
 
 mainClickButton = Button(master, text="Reset", command = reset)
-mainClickButton.pack(side=BOTTOM, anchor=NW)
+mainClickButton.pack(side=BOTTOM, anchor=NE)
+mainClickButton = Button(master, text="Prestige", command = prestige)
+mainClickButton.pack(side=BOTTOM, anchor=NE)
 
 
 
@@ -231,12 +255,12 @@ label = Label(master, text="Auto Sex Multiplier:")
 label.pack(side=TOP, anchor=NW,)
 label = Label(master, textvariable=var3)
 label.pack(side=TOP, anchor=NW,)
-
+label = Label(master, text="Prestige:")
+label.pack(side=TOP, anchor=NW,)
 label = Label(master, textvariable=var4)
-label.pack(side=TOP, anchor=SE,)
+label.pack(side=TOP, anchor=NW,)
 
-label = Label(master, image=bgimg)
-label.pack()
+
 
 autoclick()
 master.title("Sex With H3xer")
